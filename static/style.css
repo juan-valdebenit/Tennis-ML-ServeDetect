@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    text-align: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+    margin: 20px auto; /* Center the input */
+    display: block;
+    width: auto; /* Adjust the width as needed */
+    padding: 10px;
+    box-sizing: border-box;
+    align-items: center; /* Align content vertically in the center */
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#loading, #response {
+    margin-top: 20px;
+}
+
+/*.output-container {*/
+/*    background-color: #dff0d8;*/
+/*    border: 1px solid #d0e9c6;*/
+/*    padding: 10px;*/
+/*    border-radius: 5px;*/
+/*    margin-top: 10px;*/
+/*}*/
+
+/*#filePath {*/
+/*    font-weight: bold;*/
+/*}*/
+
+/* Add this CSS for handling overflow in file paths */
+.output-container {
+    background-color: #dff0d8;
+    border: 1px solid #d0e9c6;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: auto; /* Enable vertical scrolling for long file paths */
+    max-height: 400px; /* Set a max height to limit the container size */
+}
+
+/* Style for the numbered list items */
+#fileList li {
+    list-style: decimal;
+    margin-bottom: 5px;
+    word-break: break-all; /* Allow long paths to break and wrap */
+}
