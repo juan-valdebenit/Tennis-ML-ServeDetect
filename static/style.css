@@ -39,6 +39,13 @@ form {
 
 .input-container {
     margin-bottom: 20px;
+    display: inline-flex;
+}
+
+#selectedFileDiv {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
 }
 
 .file-label {
@@ -49,6 +56,7 @@ form {
     border-radius: 5px;
     cursor: pointer;
     position: relative;
+    margin-right: 12px;
 }
 
 .file-label input {
@@ -75,7 +83,7 @@ form {
     background-color: #4CAF50;
     color: #fff;
     border: none;
-    padding: 10px 15px;
+    padding: 13px 35px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -103,7 +111,7 @@ form {
     border: 1px solid #d0e9c6;
     padding: 20px;
     border-radius: 8px;
-    margin-top: 20px;
+    margin-top: -50px;
     overflow: auto;
     /*max-height: auto;*/
 }
@@ -132,7 +140,7 @@ form {
     background-color: #f00;
     color: #fff;
     border: none;
-    padding: 10px 15px;
+    padding: 13px 40px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px; /* Adjust margin as needed */

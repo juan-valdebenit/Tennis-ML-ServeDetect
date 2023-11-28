@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="static/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tennis Video</title>
+    <title>BoomStatsAnalysis Tennis</title>
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
@@ -12,23 +13,24 @@
             <img src="/static/logo.png" alt="Logo" class="logo">
         </div>
         <form id="uploadForm" action="/api/upload-file/" method="post" enctype="multipart/form-data">
-            <div class="input-container">
+            <div class="input-container flex">
                 <label for="fileInput" class="file-label">
                     <span id="chooseFileText">Choose File</span>
                     <input type="file" name="file" id="fileInput" accept="video/*" required>
                 </label>
-                <span id="selectedFileName"></span>
+                <div id="selectedFileDiv"><span id="selectedFileName"></span></div>
                 <p id="errorMessage" class="error-message"></p> <!-- Added error message element -->
+                <button type="submit" id="submitButton">Submit</button>
             </div>
-            <button type="submit" id="submitButton">Submit</button>
+           
         </form>
         <div id="loading" style="display: none;">
-            <p>Loading...</p>
+            <p>Processing...</p>
         </div>
         <div id="response" style="display: none;">
             <div class="output-container">
                 <div class="thumbnail-images-text">
-                     <p>Thumbnail Images</p>
+                     <p>Output Videos</p>
                 </div>
                 <div id="thumbnailContainer"></div>
             </div>
