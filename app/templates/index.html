@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tennis Video</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Tennis Video</h1>
+        <div class="app-bar">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+        </div>
         <form id="uploadForm" action="/api/upload-file/" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" id="fileInput" accept="video/*" required>
+            <div class="input-container">
+                <label for="fileInput" class="file-label">
+                    <span id="chooseFileText">Choose File</span>
+                    <input type="file" name="file" id="fileInput" accept="video/*" required>
+                </label>
+                <span id="selectedFileName"></span>
+                <p id="errorMessage" class="error-message"></p> <!-- Added error message element -->
+            </div>
             <button type="submit" id="submitButton">Submit</button>
         </form>
         <div id="loading" style="display: none;">
@@ -18,9 +27,12 @@
         </div>
         <div id="response" style="display: none;">
             <div class="output-container">
-                <p>File Paths:</p>
-                <ol id="fileList"></ol>
+                <div class="thumbnail-images-text">
+                     <p>Thumbnail Images</p>
+                </div>
+                <div id="thumbnailContainer"></div>
             </div>
+            <button id="resetButton">Reset</button>
         </div>
     </div>
     <script src="/static/script.js"></script>

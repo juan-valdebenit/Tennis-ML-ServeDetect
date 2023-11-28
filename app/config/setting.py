@@ -6,8 +6,13 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     app_name: str = "Awesome API"
     admin_email: str = "example email"
-    base_dir: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    upload_dir: str = os.path.join(base_dir, 'uploads')
+    root_dir: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    base_dir: str = os.path.join(root_dir, 'app')
+    statis_dir: str = os.path.join(root_dir, 'static')
+    upload_dir: str = os.path.join(statis_dir, 'uploads')
+    thumbnail_dir: str = os.path.join(statis_dir, 'thumbnails')
+    thumbnail_show_dir: str = os.path.join("", 'thumbnails')
+    
     lstm_bin_size: int = 32
     lstm_threshold: float = 0.9
     # max_frame_process: int = 10000
@@ -21,7 +26,8 @@ class Settings(BaseSettings):
     aws_access_key_id : str = 'your_access_key'
     aws_secret_access_key: str = 'your_secret_key'
     aws_region: str = 'us-east-1'
-    aws_s3_bucket: str = 'your_bucket_name'
+    aws_s3_bucket_input: str = 'your_bucket_name'
+    aws_s3_bucket_output: str = 'your_bucket_name'
     is_upload_to_s3: bool = True
 
 

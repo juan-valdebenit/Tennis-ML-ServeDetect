@@ -5,6 +5,7 @@ Backend receive this video and segment and generate new segment videos based on
 player ball serve. 
 
 ## How to run
+**Importent** first install ['ffmpeg'](https://ffmpeg.org/), for linux: sudo apt install ffmpeg
 1. create  python virtual env.
 User python version 3.10
 
@@ -39,7 +40,8 @@ AWS_SECRET_ACCESS_KEY=your_aws_access_kay
 AWS_REGION=which_region your bucket located
 IS_UPLOAD_TO_S3=true | false
 IS_CLEAN_LOCAL_VIDEOS=false | true
-AWS_S3_BUCKET=your_bucket_name
+AWS_S3_BUCKET_INPUT=your_bucket_name
+AWS_S3_BUCKET_OUTPUT=your_bucket_name
 ```
 IS_UPLOAD_TO_S3 - 
     - true: cut clip would be uploaded in s3
@@ -50,8 +52,10 @@ IS_CLEAN_LOCAL_VIDEOS:
 ### Local saved location:
 ```
 project_root:
-    app:
-        uploads
+    static:
+        - uploads
+        - thumbnails
+        
 ```
 This uploads file contain locally saved clip. 
 I you set 
@@ -63,6 +67,6 @@ otherwise it will keep.
 Download model from given link in release note and
 keep on bellow folders. 
 ```angular2html
-app
+project_root:
     - models
 ```

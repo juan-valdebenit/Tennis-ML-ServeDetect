@@ -1,65 +1,139 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
 }
 
 .container {
-    max-width: 900px;
-    margin: 50px auto;
-    text-align: center;
-    background-color: white;
+    max-width: 80%;
+    margin: auto;
+    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-input {
-    margin: 20px auto; /* Center the input */
-    display: block;
-    width: auto; /* Adjust the width as needed */
-    padding: 10px;
-    box-sizing: border-box;
-    align-items: center; /* Align content vertically in the center */
+.app-bar {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
 }
 
-button {
-    padding: 10px;
+.logo {
+    height: 55px;
+}
+
+h1 {
+    margin: 0;
+    color: green;
+    font-size: 32px;
+}
+
+form {
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 10px 15px;
     background-color: #4CAF50;
-    color: white;
-    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.file-label input {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
     cursor: pointer;
 }
 
-#loading, #response {
+.file-label span {
+    font-size: 16px;
+}
+
+/* Add styles for the chosen file name */
+#fileName {
+    margin-right: 10px;
+}
+
+#submitButton {
+    display: block;
+    margin: auto;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#loading {
+    margin-top: 20px;
+    text-align: center;
+    color: red;
+
+}
+
+#response {
     margin-top: 20px;
 }
 
-/*.output-container {*/
-/*    background-color: #dff0d8;*/
-/*    border: 1px solid #d0e9c6;*/
-/*    padding: 10px;*/
-/*    border-radius: 5px;*/
-/*    margin-top: 10px;*/
-/*}*/
+.thumbnail-images-text {
+    text-align: center;
+    color: blue;
+    font-weight: bold;
+    font-size: 24px;
+}
 
-/*#filePath {*/
-/*    font-weight: bold;*/
-/*}*/
-
-/* Add this CSS for handling overflow in file paths */
 .output-container {
     background-color: #dff0d8;
     border: 1px solid #d0e9c6;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-    overflow: auto; /* Enable vertical scrolling for long file paths */
-    max-height: 400px; /* Set a max height to limit the container size */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    overflow: auto;
+    /*max-height: auto;*/
 }
 
-/* Style for the numbered list items */
-#fileList li {
-    list-style: decimal;
-    margin-bottom: 5px;
-    word-break: break-all; /* Allow long paths to break and wrap */
+
+.thumbnail-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* or justify-content: space-between; */
+}
+
+.thumbnail {
+    width: calc(25% - 10px); /* 25% width with margin between thumbnails */
+    height: 200px;
+    margin: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+
+/* Center the reset button */
+#resetButton {
+    display: block;
+    margin: auto;
+    background-color: #f00;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px; /* Adjust margin as needed */
 }

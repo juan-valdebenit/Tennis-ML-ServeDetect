@@ -11,15 +11,23 @@ def get_s3():
 
     return s3
 
-def upload_file_to_s3(local_file_path, bucket_name, s3_file_name=None, ):
-    if s3_file_name is None:
-        s3_file_name = os.path.basename(local_file_path)
 
+def upload_file_to_s3(local_file_path, bucket_name, s3_file_name):
     try:
         s3 = get_s3()
+
         # Upload the file
         s3.upload_file(local_file_path, bucket_name, s3_file_name)
-        print(f"File '{local_file_path}' uploaded to '{bucket_name}' as '{s3_file_name}'")
+        s3.put_object_acl(Bucket=bucket_name, Key=s3_file_name, ACL='public-read')
+
+        # Generate the public URL
+        public_url = f"https://{bucket_name}.s3.amazonaws.com/{s3_file_name}"
+
+        # print(f"File '{local_file_path}' uploaded to '{bucket_name}' as '{s3_file_name}'")
+        # print(f"Public URL: {public_url}")
+
+        return public_url
+
     except FileNotFoundError:
         print(f"The file '{local_file_path}' was not found.")
     except NoCredentialsError:
@@ -43,10 +51,19 @@ def upload_folder_to_s3(local_folder_path, bucket_name, given_file_name=""):
                 s3_file_name = s3_file_name.replace(os.path.sep, '/')
 
                 # Upload the file to S3
-                upload_file_to_s3(local_file_path, bucket_name, s3_file_name)
-                s3_file_list.append(s3_file_name)
+                public_url = upload_file_to_s3(local_file_path, bucket_name, s3_file_name)
+                s3_file_list.append(public_url)
     except NoCredentialsError:
         print("Credentials not available.")
 
     return s3_file_list
 
+def upload_single_file_to_s3(local_file_name, bucket_name):
+    try:
+        last_folder_name = os.path.basename(os.path.dirname(local_file_name))
+        file_name = os.path.basename(local_file_name)
+        s3_file_name = f"{last_folder_name}_{file_name}"
+        upload_file_to_s3(local_file_name, bucket_name, s3_file_name)
+
+    except NoCredentialsError:
+        print("Credentials not available.")
