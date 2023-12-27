@@ -29,7 +29,7 @@ def get_thumbnails_path(video_clip_file_list, thumbnail_path):
             outfile = os.path.join(thumbnail_path, file_base_name)
             generate_thumbnail(file_name, outfile)
 
-            static_path = os.path.join('static', outfile.split('static/')[-1])
+            static_path = os.path.join('static', outfile.split(f'static{os.sep}')[-1])
             thumbnail_image_list.append(static_path)
 
     except Exception as err:

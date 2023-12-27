@@ -26,15 +26,20 @@ def analysis_video(video_path: str, output_path: str):
     total_serve = 0
     serve_count = 0
     last_serve_frame = 0
+    total_frame = -1
 
     while cap.isOpened():
         success, frame = cap.read()
         if not success:
             break
         raw_frame.append(frame)
+        total_frame += 1
 
-        if len(raw_frame) %1000==0:
-            print(f"Frame proces: {len(raw_frame)}")
+        if total_frame % 1000 == 0:
+            print(f"Frame proces: {total_frame}")
+
+        if total_frame % settings.frame_inverse_ratio != 0:
+            continue
 
         # annotate frame
         annotation, is_pose_found = get_poses(frame)
@@ -57,24 +62,27 @@ def analysis_video(video_path: str, output_path: str):
         is_actual_serve = sum(serve_list) >= settings.max_serve_in_sequence
         serve_list = []  # clean serve list for next
 
-        if is_actual_serve and ((len(raw_frame) - last_serve_frame) > (settings.serve_distance * frame_rate)):
-        # if is_actual_serve:
+        if is_actual_serve and ((total_frame - last_serve_frame) > (settings.serve_distance * frame_rate)):
+            print(f"Total frame: {total_frame} || Last serve frame : {last_serve_frame} || Distance : {settings.serve_distance * frame_rate} ||"
+                  f"Actual distance: {(total_frame - last_serve_frame)}")
+            # if is_actual_serve:
             serve_count += 1
             total_serve += 1
             print(f"Current serve count: {total_serve}")
 
             if serve_count == 1:
-                last_serve_frame = min(0, len(raw_frame) - int(frame_rate * 1.5))
+                last_serve_frame = max(0, total_frame - int(frame_rate * 1.5))
+                end_frame = len(raw_frame) - int(frame_rate * 3)
             else:
                 end_frame = len(raw_frame) - int(frame_rate * 3)
-                writeable_frames = raw_frame[last_serve_frame:end_frame]
+                writeable_frames = raw_frame[:end_frame]
 
                 # Reset serve counter...
                 serve_count = 1
-                last_serve_frame = end_frame
+                last_serve_frame = total_frame - int(frame_rate * 3)
 
                 video_output_path = os.path.join(output_path,
-                                                 f"{filename_without_extension}_{total_serve-1}.mp4")
+                                                 f"{filename_without_extension}_{total_serve - 1}.mp4")
                 write_and_upload_video(
                     video_output_path,
                     frame_width,
@@ -84,8 +92,7 @@ def analysis_video(video_path: str, output_path: str):
                 )
                 output_file_list.append(video_output_path)
 
+            raw_frame = raw_frame[end_frame:]
 
     cap.release()
     return output_file_list
-
-

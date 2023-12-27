@@ -3,13 +3,36 @@ from typing import List
 
 import numpy as np
 import tensorflow as tf
-import cv2
+from tensorflow.keras import layers
 
 from app.config.setting import settings
 
+
+@tf.keras.utils.register_keras_serializable()
+class TransformerBlock(layers.Layer):
+    def __init__(self, embed_dim, num_heads, ff_dim, rate=0.1):
+        super().__init__()
+        self.att = layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim)
+        self.ffn = tf.keras.Sequential(
+            [layers.Dense(ff_dim, activation="relu"), layers.Dense(embed_dim),]
+        )
+        self.layernorm1 = layers.LayerNormalization(epsilon=1e-6)
+        self.layernorm2 = layers.LayerNormalization(epsilon=1e-6)
+        self.dropout1 = layers.Dropout(rate)
+        self.dropout2 = layers.Dropout(rate)
+
+    def call(self, inputs, training):
+        attn_output = self.att(inputs, inputs)
+        attn_output = self.dropout1(attn_output, training=training)
+        out1 = self.layernorm1(inputs + attn_output)
+        ffn_output = self.ffn(out1)
+        ffn_output = self.dropout2(ffn_output, training=training)
+        return self.layernorm2(out1 + ffn_output)
+
+
 # 32 sequence and v3_2 and v3_3 good work. v3_2 is best.
-lstm_model_path = os.path.join(settings.root_dir, 'models/lstm_model_32_v3_2.h5')
-lstm_model = tf.keras.models.load_model(lstm_model_path)
+
+lstm_model = tf.keras.models.load_model(settings.lstm_model_path)
 
 
 def get_keypoints(results):

@@ -2,35 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="static/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BoomStatsAnalysis Tennis</title>
+    <title>Tennis Video</title>
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
     <div class="container">
         <div class="app-bar">
             <img src="/static/logo.png" alt="Logo" class="logo">
+            <h1>Tennis</h1>
         </div>
         <form id="uploadForm" action="/api/upload-file/" method="post" enctype="multipart/form-data">
-            <div class="input-container flex">
+            <div class="input-container">
                 <label for="fileInput" class="file-label">
                     <span id="chooseFileText">Choose File</span>
                     <input type="file" name="file" id="fileInput" accept="video/*" required>
                 </label>
-                <div id="selectedFileDiv"><span id="selectedFileName"></span></div>
+                <span id="selectedFileName"></span>
                 <p id="errorMessage" class="error-message"></p> <!-- Added error message element -->
-                <button type="submit" id="submitButton">Submit</button>
             </div>
-           
+            <button type="submit" id="submitButton">Submit</button>
         </form>
         <div id="loading" style="display: none;">
-            <p>Processing...</p>
+            <p>Loading...</p>
         </div>
         <div id="response" style="display: none;">
             <div class="output-container">
                 <div class="thumbnail-images-text">
-                     <p>Output Videos</p>
+                     <p>Thumbnail Images</p>
                 </div>
                 <div id="thumbnailContainer"></div>
             </div>

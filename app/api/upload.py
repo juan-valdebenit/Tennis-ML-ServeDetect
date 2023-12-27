@@ -18,7 +18,6 @@ async def create_upload_file(file: UploadFile = File(...)):
     folder_name = str(uuid4())
     upload_path = os.path.join(settings.upload_dir, folder_name)
     thumbnail_path = os.path.join(settings.thumbnail_dir, folder_name)
-    thumbnail_show_path = os.path.join(settings.thumbnail_show_dir, folder_name)
 
     # Create the folder
     os.makedirs(upload_path, exist_ok=True)
@@ -38,15 +37,12 @@ async def create_upload_file(file: UploadFile = File(...)):
     os.remove(file_path)
 
     # upload video clip to s3
-    s3_file_list=None
+    s3_file_list = None
     if settings.is_upload_to_s3:
         filename_without_extension, _ = os.path.splitext(os.path.basename(file_path))
         s3_file_list = upload_folder_to_s3(upload_path, settings.aws_s3_bucket_output, filename_without_extension)
 
     thumbnail_path = get_thumbnails_path(video_clip_file_list, thumbnail_path)
-
-    thumbnail_show_path = get_thumbnails_path(video_clip_file_list, thumbnail_show_path)
-
 
     if settings.is_upload_to_s3 and settings.is_clean_local_videos:
         delete_folder(upload_path)
@@ -55,7 +51,7 @@ async def create_upload_file(file: UploadFile = File(...)):
         video_file_path = s3_file_list
     else:
         for file_name in video_clip_file_list:
-            static_path = os.path.join('static', file_name.split('static/')[-1])
+            static_path = os.path.join('static', file_name.split(f'static{os.sep}')[-1])
             video_file_path.append(static_path)
-        #thumbnail_path
-    return {"file_paths": video_file_path, "thumbnail_paths": thumbnail_show_path }
+
+    return {"file_paths": video_file_path, "thumbnail_paths": thumbnail_path}
