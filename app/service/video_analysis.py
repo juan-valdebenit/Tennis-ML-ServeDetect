@@ -62,7 +62,7 @@ def analysis_video(video_path: str, output_path: str):
         is_actual_serve = sum(serve_list) >= settings.max_serve_in_sequence
         serve_list = []  # clean serve list for next
 
-        if is_actual_serve and ((total_frame - last_serve_frame) > (settings.serve_distance * frame_rate)):
+        if is_actual_serve and (((total_frame - last_serve_frame) > (settings.serve_distance * frame_rate)) or total_serve <= 0):
             print(f"Total frame: {total_frame} || Last serve frame : {last_serve_frame} || Distance : {settings.serve_distance * frame_rate} ||"
                   f"Actual distance: {(total_frame - last_serve_frame)}")
             # if is_actual_serve:

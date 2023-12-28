@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     is_upload_to_s3: bool = False
 
     # Model
-    lstm_model_name: str = 'lstm_model_24_s2_v1_15.keras'
+    lstm_model_name: str = 'lstm_model_24_s2_v1_15.h5'
     lstm_model_path: str = os.path.join(root_dir, 'models', lstm_model_name)
 
 

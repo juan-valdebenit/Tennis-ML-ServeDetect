@@ -30,9 +30,12 @@ class TransformerBlock(layers.Layer):
         return self.layernorm2(out1 + ffn_output)
 
 
-# 32 sequence and v3_2 and v3_3 good work. v3_2 is best.
-
-lstm_model = tf.keras.models.load_model(settings.lstm_model_path)
+print(f"Loading model: {settings.lstm_model_path}")
+lstm_model = tf.keras.models.load_model(settings.lstm_model_path,
+                                        custom_objects={'TransformerBlock': TransformerBlock},
+                                        compile=False,
+                                        safe_mode=False
+                                        )
 
 
 def get_keypoints(results):
